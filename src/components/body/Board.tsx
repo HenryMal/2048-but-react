@@ -32,6 +32,30 @@ const Board = () => {
         <Grid />
       </BoardContainer>
 
+      {gameState.tiles.map((row) =>
+        row
+          .filter((tile) => tile !== null)
+          .map((tile) => {
+            const tileComponent = (
+              <FilledTile
+                key={`${tile.id}-${tile.currentIndex[0]}-${tile.currentIndex[1]}`}
+                {...tile}
+              />
+            );
+
+            const mergedTileComponents = tile.merged
+              ? tile.merged.map((mergedTile) => (
+                  <FilledTile
+                    key={`${mergedTile.id}-${mergedTile.currentIndex[0]}-${mergedTile.currentIndex[1]}`}
+                    {...mergedTile}
+                  />
+                ))
+              : [];
+
+            return [tileComponent, ...mergedTileComponents];
+          })
+      )}
+
       {gameState.gameOver && <GameOverOverlay tryAgainOnClick={startNewGame} />}
 
       {gameState.gameWon && !gameState.freeMode && (
