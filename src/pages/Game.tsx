@@ -15,6 +15,8 @@ const Game = () => {
       if (gameState.gameOver) return;
       if (gameState.gameWon && !gameState.freeMode) return;
 
+      event.preventDefault();
+
       const action = CONTROLS[event.code];
       if (action) {
         dispatch(action);
